@@ -22,6 +22,7 @@ enum FU_CODE {
 /**
  * Initialize function.
  * This function initialize the basic stuff.
+ * @return 0 if no errors found.
  */
 int fu_init(void);
 
@@ -30,14 +31,52 @@ int fu_init(void);
  */
 void fu_end(void);
 
-void fu_set_url(const char *);
+/**
+ * Set the URL to upload the files.
+ * @param url is the URL to upload the files.
+ */
+void fu_set_url(const char *url);
 
-void fu_set_image_file(const char *);
+/**
+ * Set the image filename tu upload.
+ * The filename should be the full path.
+ * @image is the full path of the image.
+ */
+void fu_set_image_file(const char *image);
 
-void fu_set_text_file(const char *);
+/**
+ * Set the text file to upload.
+ * @textfile is the full path of the file.
+ */
+void fu_set_text_file(const char *textfile);
 
-void fu_remove_expectheader(enum FU_CODE);
+/**
+ * Remove the expect header.
+ *
+ * When using the HttpWebRequest to POST form data using HTTP 1.1, it ALWAYS
+ * adds the following HTTP header “Expect: 100-Continue”. Fixing the problem
+ * has proved to be quite elusive.
+ *
+ * According to the HTTP 1.1 protocol, when this header is sent, the form data
+ * is not sent with the initial request. Instead, this header is sent to the
+ * web server which responds with 100 (Continue) if implemented correctly.
+ * However, not all web servers handle this correctly, including the server to
+ * which I am attempting to post data. I sniffed the headers that Internet
+ * Explorer sends and noticed that it does not send this header, but my code
+ * does.
+ *
+ * Document source: http://haacked.com/archive/2004/05/15/http-web-request-expect-100-continue.aspx/
+ * More documents: https://httpstatusdogs.com/100-continue
+ * https://www.w3.org/Protocols/rfc2616/rfc2616-sec8.html
+ *
+ * @param flag is to remove with FU_YES, or keep it with FU_NO.
+ */
+void fu_remove_expectheader(enum FU_CODE flag);
 
+/**
+ * Upload the files to the webserver.
+ * @return 0 if no errors found.
+ */
 int fu_upload();
 
 #ifdef __cplusplus
