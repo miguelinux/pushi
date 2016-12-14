@@ -11,20 +11,24 @@ extern "C" {
 #endif
 
 /**
- * A file upload structure.
- */
-struct _sfu {
-	char url[MAX_URL_LEN]; /**< The URL to updoad the files */
-	char img[MAX_PATH_LEN]; /**< The image fullpath */
-	char txt[MAX_PATH_LEN]; /**< The text file fullpath */
-};
-
-/**
  * Codes from FU.
  */
 enum FU_CODE {
 	FU_NO  = 0, /**< False value */
-	FU_YES = 1  /**< True  value */
+	FU_YES = 1, /**< True  value */
+
+	FU_URL_SET	= 0x10, /**< Flag to know if URL is set */
+	FU_NO_EXPECT	= 0x20, /**< Flag to remove expect header */
+};
+
+/**
+ * A file upload structure.
+ */
+struct _sfu {
+	char url[MAX_URL_LEN];  /**< The URL to updoad the files */
+	char img[MAX_PATH_LEN]; /**< The image fullpath */
+	char txt[MAX_PATH_LEN]; /**< The text file fullpath */
+	int  flags; /**< Config flags as show in FU_CODE */
 };
 
 /**
