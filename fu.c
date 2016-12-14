@@ -57,6 +57,8 @@ void fu_end(void)
 void fu_set_url(const char *url)
 {
 	sprintf(fu_conf.url, "%s", url);
+	/* Keep that we already set the URL */
+	fu_conf.flags |= FU_URL_SET;
 }
 
 void fu_set_image_file(const char *image)
@@ -71,6 +73,7 @@ void fu_set_text_file(const char *textfile)
 
 void fu_remove_expectheader(enum FU_CODE flag)
 {
+	/* if FU_YES, then we remove expect else we keep it */
 	if (flag)
 		fu_conf.flags |= FU_NO_EXPECT;
 	else
