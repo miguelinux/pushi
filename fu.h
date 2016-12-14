@@ -12,7 +12,6 @@ extern "C" {
  */
 struct _sfu {
 	char url[80]; /**< The URL to updoad the files */
-
 };
 
 
@@ -20,7 +19,7 @@ struct _sfu {
  * Initialize function.
  * This function initialize the basic stuff.
  */
-int fu_init();
+int fu_init(void);
 
 /**
  * Cleanup function.
@@ -28,7 +27,7 @@ int fu_init();
 void fu_end(void);
 
 #ifdef __cplusplus
-extern "C" {
+}
 #endif
 #endif
 /*

@@ -1,12 +1,12 @@
-#include <fu.h>
 #include <stdio.h>
+#include <fu.h>
 
 /**
  * CURL handle session.
  */
 static CURL *fu_curl = NULL;
 
-int fu_init()
+int fu_init(void)
 {
 	CURLcode res;
 
@@ -18,7 +18,7 @@ int fu_init()
 
 	fu_curl = curl_easy_init();
 	if (fu_curl == NULL) {
-		fprintf(stderr, "Error(%d): fail in easy init.\n");
+		fprintf(stderr, "Error: fail in easy init.\n");
 		curl_global_cleanup();
 		return -1;
 	}
