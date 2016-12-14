@@ -7,15 +7,22 @@ static CURL *fu_curl = NULL;
 
 int fu_init() {
 
-  CURLcode res;
+	CURLcode res;
 
-  res = curl_global_init(CURL_GLOBAL_ALL);
-  if (res != CURLE_OK) {
-	  fprintf(stderr, "Error(%d): something went wrong and you cannot use curl functions.\n", res);
-	  return (int)res;
-  }
+	res = curl_global_init(CURL_GLOBAL_ALL);
+	if (res != CURLE_OK) {
+		fprintf(stderr, "Error(%d): fail in global init.\n", res);
+		return -res;
+	}
 
-  return 0;
+	fu_curl = curl_easy_init();
+	if (fu_curl == NULL) {
+		fprintf(stderr, "Error(%d): fail in easy init.\n");
+		curl_global_cleanup();
+		return -1;
+	}
+
+	return 0;
 }
 
 int fu_end() {
