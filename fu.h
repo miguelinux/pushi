@@ -65,6 +65,8 @@ void fu_set_text_file(const char *textfile);
 /**
  * Remove the expect header.
  *
+ * By default FU do not remove the expect header.
+ *
  * When using the HttpWebRequest to POST form data using HTTP 1.1, it ALWAYS
  * adds the following HTTP header “Expect: 100-Continue”. Fixing the problem
  * has proved to be quite elusive.

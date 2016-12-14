@@ -28,8 +28,6 @@ int main (void)
 
 	fu_set_image_file(IMG1);
 	fu_set_text_file(TXT1);
-	// See fu.h documentation regarding the following function
-	fu_remove_expectheader(FU_NO);
 	fu_upload();
 
 	fu_set_image_file(IMG2);

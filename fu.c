@@ -1,10 +1,24 @@
 #include <stdio.h>
+#include <string.h>
 #include <fu.h>
 
 /**
  * CURL handle session.
  */
 static CURL *fu_curl = NULL;
+
+static struct _sfu fu_conf;
+
+/**
+ * Initialize the fu_conf.
+ */
+static void fu_conf_init(void)
+{
+	memset(fu_conf.url, 0, FU_MAX_URL_LEN);
+	memset(fu_conf.img, 0, FU_MAX_PATH_LEN);
+	memset(fu_conf.txt, 0, FU_MAX_PATH_LEN);
+	fu_conf.flags = 0;
+}
 
 int fu_init(void)
 {
@@ -23,6 +37,8 @@ int fu_init(void)
 		return -1;
 	}
 
+	fu_conf_init();
+
 	return 0;
 }
 
@@ -34,6 +50,29 @@ void fu_end(void)
 	fu_curl = NULL;
 	curl_global_cleanup();
 }
+
+void fu_set_url(const char *url)
+{
+}
+
+void fu_set_image_file(const char *image)
+{
+}
+
+void fu_set_text_file(const char *textfile)
+{
+}
+
+void fu_remove_expectheader(enum FU_CODE flag)
+{
+}
+
+int fu_upload()
+{
+	return 0;
+}
+
+
 /*
  * Editor modelines  -  https://www.wireshark.org/tools/modelines.html
  *
