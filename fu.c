@@ -84,8 +84,9 @@ int fu_upload()
 {
 	CURLcode res;
 	CURLFORMcode resForm;
+	int ret = 0;
 
-	struct curl_httppost *post = NULL;
+	struct curl_httppost *formpost = NULL;
 	struct curl_httppost *last = NULL;
 
 	struct curl_slist *headerlist  = NULL;
@@ -94,26 +95,74 @@ int fu_upload()
 
 	static const char buf[] = "Expect:";
 
+	if (! (fu_conf.flags & FU_INIT_OK) ) {
+		fprintf(stderr, "Error: FU was not initializated.\n");
+		return -1;
+	}
+
 	forms[0].option = CURLFORM_FILE;
 	forms[0].value  = fu_conf.img;
 	forms[1].option = CURLFORM_FILE;
 	forms[1].value  = fu_conf.txt;
 	forms[2].option  = CURLFORM_END;
 
-	resForm = curl_formadd(&post, &last, CURLFORM_COPYNAME, "pictures",
+	resForm = curl_formadd(&formpost, &last, CURLFORM_COPYNAME, "pictures",
 				CURLFORM_ARRAY, forms, CURLFORM_END);
 	if (resForm) {
 		fprintf(stderr, "Error(%d): fail in formadd.\n", resForm);
-		curl_formfree(post);
-		return -resForm;
+		ret= -resForm;
+		goto fail;
+	}
+
+	res = curl_easy_setopt(fu_curl, CURLOPT_URL, fu_conf.url);
+	if (res) {
+		fprintf(stderr, "Error(%d): fail in setopt URL.\n", res);
+		ret = -res;
+		goto fail;
 	}
 
 	/* initialize custom header list (stating that Expect: 100-continue
 	 * is not wanted */
 	headerlist = curl_slist_append(headerlist, buf);
 
+	/* only disable 100-continue header if explicitly requested */
+	if (fu_conf.flags & FU_NO_EXPECT) {
+		res = curl_easy_setopt(fu_curl, CURLOPT_HTTPHEADER, headerlist);
+		if (res) {
+			fprintf(stderr, "Error(%d): fail in setopt header.\n", res);
+			ret = -res;
+			goto fail;
+		}
+	}
 
+	/* set the form post values */
+	res = curl_easy_setopt(fu_curl, CURLOPT_HTTPPOST, formpost);
+	if (res) {
+		fprintf(stderr, "Error(%d): fail in setopt formpost.\n", res);
+		ret = -res;
+		goto fail;
+	}
+
+	/* Perform the request */
+	res = curl_easy_perform(fu_curl);
+
+	if(res)
+		fprintf(stderr, "curl_easy_perform() failed: %s\n",
+			curl_easy_strerror(res));
+
+fail:
+
+	// remove path files
 	fu_set_conf(FU_INIT_OK | FU_URL_SET);
+
+	/* reset fu_curl */
+	curl_easy_reset(fu_curl);
+
+	/* then cleanup the formpost chain */
+	curl_formfree(formpost);
+
+	/* free slist */
+	curl_slist_free_all (headerlist);
 
 	return 0;
 }
