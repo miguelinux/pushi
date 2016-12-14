@@ -1,7 +1,8 @@
 #include <fu.h>
 
-#define FILE_1 "myfile1.img"
-#define FILE_2 "myfile2.txt"
+#define URL "file:///tmp/upload"
+#define FILE_1 "imagen.jpg"
+#define FILE_2 "texto.txt"
 
 
 /**
