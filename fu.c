@@ -82,6 +82,17 @@ void fu_remove_expectheader(enum FU_CODE flag)
 
 int fu_upload()
 {
+	struct curl_httppost *formpost = NULL;
+	struct curl_httppost *lastptr  = NULL;
+	struct curl_slist *headerlist  = NULL;
+	static const char buf[] = "Expect:";
+
+	curl_formadd(&formpost,
+			&lastptr,
+			CURLFORM_COPYNAME, "sendfile",
+			CURLFORM_FILE, "postit2.c",
+			CURLFORM_END);
+
 	return 0;
 }
 
