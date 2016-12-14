@@ -26,7 +26,7 @@ int fu_init()
 	return 0;
 }
 
-int fu_end()
+void fu_end(void)
 {
 
 	if (fu_curl)

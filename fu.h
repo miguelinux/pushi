@@ -25,7 +25,7 @@ int fu_init();
 /**
  * Cleanup function.
  */
-int fu_end();
+void fu_end(void);
 
 #ifdef __cplusplus
 extern "C" {
