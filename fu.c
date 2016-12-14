@@ -56,18 +56,25 @@ void fu_end(void)
 
 void fu_set_url(const char *url)
 {
+	sprintf(fu_conf.url, "%s", url);
 }
 
 void fu_set_image_file(const char *image)
 {
+	sprintf(fu_conf.img, "%s", image);
 }
 
 void fu_set_text_file(const char *textfile)
 {
+	sprintf(fu_conf.txt, "%s", textfile);
 }
 
 void fu_remove_expectheader(enum FU_CODE flag)
 {
+	if (flag)
+		fu_conf.flags |= FU_NO_EXPECT;
+	else
+		fu_conf.flags &= ~FU_NO_EXPECT;
 }
 
 int fu_upload()
