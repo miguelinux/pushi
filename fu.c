@@ -9,12 +9,6 @@ static CURL *fu_curl = NULL;
 
 static struct _sfu fu_conf;
 
-static size_t write_callback(char *ptr, size_t size, size_t nmemb, void *userdata)
-{
-
-}
-
-
 /**
  * Initialize the fu_conf.
  */
@@ -148,14 +142,6 @@ int fu_upload()
 		ret = -res;
 		goto fail;
 	}
-
-	res = curl_easy_setopt(fu_curl, CURLOPT_WRITEFUNCTION, write_callback);
-	if (res) {
-		fprintf(stderr, "Error(%d): fail in setopt writefunc.\n", res);
-		ret = -res;
-		goto fail;
-	}
-
 
 	/* Perform the request */
 	res = curl_easy_perform(fu_curl);
