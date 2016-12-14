@@ -5,26 +5,34 @@
     </head>
     <body>
         <form method="post" enctype="multipart/form-data">
-            <input type="file" name="pictures[]" multiple>
-            <input type="submit" value="Upload">
+            Image file: <input type="file" name="imgfile" ></br>
+	    Text file:  <input type="file" name="txtfile" ></br>
+	                <input type="submit" value="Upload">
         </form>
         <?php
-            if (isset($_FILES['pictures'])) {
-                $myFile = $_FILES['pictures'];
-                $fileCount = count($myFile["name"]);
-
-		                for ($i = 0; $i < $fileCount; $i++) {
-					                    ?>
-                        <p>File #<?= $i+1 ?>:</p>
+            if (isset($_FILES['imgfile'])) {
+                $myFile = $_FILES['imgfile']; ?>
+                        <p>File #1:</p>
                         <p>
-                            Name: <?= $myFile["name"][$i] ?><br>
-                            Temporary file: <?= $myFile["tmp_name"][$i] ?><br>
-                            Type: <?= $myFile["type"][$i] ?><br>
-                            Size: <?= $myFile["size"][$i] ?><br>
-                            Error: <?= $myFile["error"][$i] ?><br>
+                            Name: <?= $myFile["name"] ?><br>
+                            Temporary file: <?= $myFile["tmp_name"] ?><br>
+                            Type: <?= $myFile["type"] ?><br>
+                            Size: <?= $myFile["size"] ?><br>
+                            Error: <?= $myFile["error"] ?><br>
+                        </p>
+        <?php
+            }
+            if (isset($_FILES['txtfile'])) {
+                $myFile = $_FILES['txtfile']; ?>
+                        <p>File #2:</p>
+                        <p>
+                            Name: <?= $myFile["name"] ?><br>
+                            Temporary file: <?= $myFile["tmp_name"] ?><br>
+                            Type: <?= $myFile["type"] ?><br>
+                            Size: <?= $myFile["size"] ?><br>
+                            Error: <?= $myFile["error"] ?><br>
                         </p>
                     <?php
-                }
             }
         ?>
     </body>
