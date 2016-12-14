@@ -2,8 +2,10 @@
 #include <iostream>
 
 #define URL "file:///tmp/upload"
-#define FILE_1 "imagen.jpg"
-#define FILE_2 "texto.txt"
+#define IMG1 "img1.jpg"
+#define IMG2 "img2.jpg"
+#define TXT1 "txt1.txt"
+#define TXT2 "txt2.txt"
 
 using std::cout;
 using std::cerr;
@@ -22,11 +24,19 @@ int main (void)
 		return -1;
 	}
 
-	fu_set_image();
-	fu_set_text();
-	fu_remove_expectheader(FU_YES);
+	fu_set_url(URL);
+
+	fu_set_image_file(IMG1);
+	fu_set_text_file(TXT1);
+	// See fu.h documentation regarding the following function
+	fu_remove_expectheader(FU_NO);
 	fu_upload();
 
+	fu_set_image_file(IMG2);
+	fu_set_text_file(TXT2);
+	// See fu.h documentation regarding the following function
+	fu_remove_expectheader(FU_YES);
+	fu_upload();
 
 
 	// finish file upload function

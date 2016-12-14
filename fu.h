@@ -3,8 +3,8 @@
 
 #include <curl/curl.h>
 
-#define MAX_URL_LEN  80
-#define MAX_PATH_LEN 80
+#define FU_MAX_URL_LEN  90
+#define FU_MAX_PATH_LEN 80
 
 #ifdef __cplusplus
 extern "C" {
@@ -25,10 +25,10 @@ enum FU_CODE {
  * A file upload structure.
  */
 struct _sfu {
-	char url[MAX_URL_LEN];  /**< The URL to updoad the files */
-	char img[MAX_PATH_LEN]; /**< The image fullpath */
-	char txt[MAX_PATH_LEN]; /**< The text file fullpath */
-	int  flags; /**< Config flags as show in FU_CODE */
+	char url[FU_MAX_URL_LEN];  /**< The URL to updoad the files */
+	char img[FU_MAX_PATH_LEN]; /**< The image fullpath */
+	char txt[FU_MAX_PATH_LEN]; /**< The text file fullpath */
+	int  flags; /**< Config flags as shown in FU_CODE */
 };
 
 /**
