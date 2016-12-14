@@ -16,6 +16,17 @@ struct _sfu {
 };
 
 
+/**
+ * Initialize function.
+ * This function initialize the basic stuff.
+ */
+int fu_init();
+
+/**
+ * Cleanup function.
+ */
+int fu_end();
+
 #ifdef __cplusplus
 extern "C" {
 #endif

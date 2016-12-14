@@ -1,5 +1,16 @@
 #include <fu.h>
 
+/**
+ * CURL handle session.
+ */
+static CURL *fu_curl = NULL;
+
+int fu_init() {
+}
+
+int fu_end() {
+}
+
 /*
  * Editor modelines  -  https://www.wireshark.org/tools/modelines.html
  *
