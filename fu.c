@@ -12,12 +12,15 @@ static struct _sfu fu_conf;
 /**
  * Initialize the fu_conf.
  */
-static void fu_conf_init(void)
+static void fu_conf_init(enum FU_CODE code)
 {
-	memset(fu_conf.url, 0, FU_MAX_URL_LEN);
+	// Verify if we want to reset URL
+	if (! (code & FU_URL_SET) )
+		memset(fu_conf.url, 0, FU_MAX_URL_LEN);
 	memset(fu_conf.img, 0, FU_MAX_PATH_LEN);
 	memset(fu_conf.txt, 0, FU_MAX_PATH_LEN);
-	fu_conf.flags = 0;
+
+	fu_conf.flags = code;
 }
 
 int fu_init(void)
@@ -37,7 +40,7 @@ int fu_init(void)
 		return -1;
 	}
 
-	fu_conf_init();
+	fu_conf_init(0);
 
 	return 0;
 }
