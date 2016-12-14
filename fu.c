@@ -146,9 +146,11 @@ int fu_upload()
 	/* Perform the request */
 	res = curl_easy_perform(fu_curl);
 
-	if(res)
+	if(res) {
 		fprintf(stderr, "curl_easy_perform() failed: %s\n",
 			curl_easy_strerror(res));
+		ret = -res;
+	}
 
 fail:
 
@@ -164,7 +166,7 @@ fail:
 	/* free slist */
 	curl_slist_free_all (headerlist);
 
-	return 0;
+	return ret;
 }
 
 
