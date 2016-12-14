@@ -5,8 +5,8 @@
  */
 static CURL *fu_curl = NULL;
 
-int fu_init() {
-
+int fu_init()
+{
 	CURLcode res;
 
 	res = curl_global_init(CURL_GLOBAL_ALL);
@@ -25,7 +25,13 @@ int fu_init() {
 	return 0;
 }
 
-int fu_end() {
+int fu_end()
+{
+
+	if (fu_curl)
+		curl_easy_cleanup(fu_curl);
+	fu_curl = NULL;
+	curl_global_cleanup();
 }
 
 /*
