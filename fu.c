@@ -34,7 +34,6 @@ void fu_end(void)
 	fu_curl = NULL;
 	curl_global_cleanup();
 }
-
 /*
  * Editor modelines  -  https://www.wireshark.org/tools/modelines.html
  *

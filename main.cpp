@@ -22,9 +22,17 @@ int main (void)
 		return -1;
 	}
 
+	fu_set_image();
+	fu_set_text();
+	fu_remove_expectheader(FU_YES);
+	fu_upload();
+
+
+
 	// finish file upload function
 	fu_end();
 
+	cout << "exit succesful" << endl;
 	return 0;
 }
 /*

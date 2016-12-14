@@ -14,6 +14,10 @@ struct _sfu {
 	char url[80]; /**< The URL to updoad the files */
 };
 
+enum FU_CODE {
+	FU_NO  = 0,
+	FU_YES = 1
+};
 
 /**
  * Initialize function.
@@ -25,6 +29,16 @@ int fu_init(void);
  * Cleanup function.
  */
 void fu_end(void);
+
+void fu_set_url(const char *);
+
+void fu_set_image_file(const char *);
+
+void fu_set_text_file(const char *);
+
+void fu_remove_expectheader(enum FU_CODE);
+
+int fu_upload();
 
 #ifdef __cplusplus
 }
