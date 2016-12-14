@@ -14,15 +14,15 @@ using std::endl;
  */
 int main (int argc, char **argv)
 {
-	cout << "Programa de prueba de FileUpload" << endl << endl;
+	cout << "FileUpload test program" << endl << endl;
 
-	// Inicializamos fu
+	// Init file upload function
 	if ( fu_init() ) {
 		cerr << "Error to initialize File Upload " << endl;
 		return -1;
 	}
 
-	// Finalizamos fu
+	// finish file upload function
 	fu_end();
 
 	return 0;
