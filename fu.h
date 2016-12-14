@@ -17,8 +17,10 @@ enum FU_CODE {
 	FU_NO  = 0, /**< False value */
 	FU_YES = 1, /**< True  value */
 
-	FU_URL_SET	= 0x10, /**< Flag to know if URL is set */
-	FU_NO_EXPECT	= 0x20, /**< Flag to remove expect header */
+	FU_INIT_OK	= 0x10, /**< Flag to know if FU was initialized */
+	FU_URL_SET	= 0x20, /**< Flag to know if URL is set */
+	FU_NO_EXPECT	= 0x40, /**< Flag to remove expect header */
+
 };
 
 /**

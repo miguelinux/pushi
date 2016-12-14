@@ -12,7 +12,7 @@ static struct _sfu fu_conf;
 /**
  * Initialize the fu_conf.
  */
-static void fu_conf_init(enum FU_CODE code)
+static void fu_set_conf(enum FU_CODE code)
 {
 	// Verify if we want to reset URL
 	if (! (code & FU_URL_SET) )
@@ -40,7 +40,7 @@ int fu_init(void)
 		return -1;
 	}
 
-	fu_conf_init(0);
+	fu_set_conf(FU_INIT_OK);
 
 	return 0;
 }
@@ -82,16 +82,38 @@ void fu_remove_expectheader(enum FU_CODE flag)
 
 int fu_upload()
 {
-	struct curl_httppost *formpost = NULL;
-	struct curl_httppost *lastptr  = NULL;
+	CURLcode res;
+	CURLFORMcode resForm;
+
+	struct curl_httppost *post = NULL;
+	struct curl_httppost *last = NULL;
+
 	struct curl_slist *headerlist  = NULL;
+
+	struct curl_forms forms[3];
+
 	static const char buf[] = "Expect:";
 
-	curl_formadd(&formpost,
-			&lastptr,
-			CURLFORM_COPYNAME, "sendfile",
-			CURLFORM_FILE, "postit2.c",
-			CURLFORM_END);
+	forms[0].option = CURLFORM_FILE;
+	forms[0].value  = fu_conf.img;
+	forms[1].option = CURLFORM_FILE;
+	forms[1].value  = fu_conf.txt;
+	forms[2].option  = CURLFORM_END;
+
+	resForm = curl_formadd(&post, &last, CURLFORM_COPYNAME, "pictures",
+				CURLFORM_ARRAY, forms, CURLFORM_END);
+	if (resForm) {
+		fprintf(stderr, "Error(%d): fail in formadd.\n", resForm);
+		curl_formfree(post);
+		return -resForm;
+	}
+
+	/* initialize custom header list (stating that Expect: 100-continue
+	 * is not wanted */
+	headerlist = curl_slist_append(headerlist, buf);
+
+
+	fu_set_conf(FU_INIT_OK | FU_URL_SET);
 
 	return 0;
 }
