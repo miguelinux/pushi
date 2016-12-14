@@ -5,12 +5,12 @@
     </head>
     <body>
         <form method="post" enctype="multipart/form-data">
-            <input type="file" name="my_file[]" multiple>
+            <input type="file" name="pictures[]" multiple>
             <input type="submit" value="Upload">
         </form>
         <?php
-            if (isset($_FILES['my_file'])) {
-                $myFile = $_FILES['my_file'];
+            if (isset($_FILES['pictures'])) {
+                $myFile = $_FILES['pictures'];
                 $fileCount = count($myFile["name"]);
 
 		                for ($i = 0; $i < $fileCount; $i++) {
