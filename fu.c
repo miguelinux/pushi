@@ -1,4 +1,5 @@
 #include <fu.h>
+#include <stdio.h>
 
 /**
  * CURL handle session.
