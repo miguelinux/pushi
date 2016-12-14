@@ -12,7 +12,7 @@ using std::endl;
 /**
  * The main function.
  */
-int main (int argc, char **argv)
+int main (void)
 {
 	cout << "FileUpload test program" << endl << endl;
 
