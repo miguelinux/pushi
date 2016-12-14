@@ -1,7 +1,7 @@
 #include <fu.h>
 #include <iostream>
 
-#define URL "file:///tmp/upload"
+#define URL "http://url.info/negro/utest.php"
 #define IMG1 "img1.jpg"
 #define IMG2 "img2.jpg"
 #define TXT1 "txt1.txt"

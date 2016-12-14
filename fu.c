@@ -91,8 +91,6 @@ int fu_upload()
 
 	struct curl_slist *headerlist  = NULL;
 
-	struct curl_forms forms[3];
-
 	static const char buf[] = "Expect:";
 
 	if (! (fu_conf.flags & FU_INIT_OK) ) {
@@ -100,16 +98,18 @@ int fu_upload()
 		return -1;
 	}
 
-	forms[0].option = CURLFORM_FILE;
-	forms[0].value  = fu_conf.img;
-	forms[1].option = CURLFORM_FILE;
-	forms[1].value  = fu_conf.txt;
-	forms[2].option  = CURLFORM_END;
-
-	resForm = curl_formadd(&formpost, &last, CURLFORM_COPYNAME, "pictures",
-				CURLFORM_ARRAY, forms, CURLFORM_END);
+	resForm = curl_formadd(&formpost, &last, CURLFORM_COPYNAME, "imgfile",
+			CURLFORM_FILE, fu_conf.img, CURLFORM_END);
 	if (resForm) {
-		fprintf(stderr, "Error(%d): fail in formadd.\n", resForm);
+		fprintf(stderr, "Error(%d): fail in formadd imgfile.\n", resForm);
+		ret= -resForm;
+		goto fail;
+	}
+
+	resForm = curl_formadd(&formpost, &last, CURLFORM_COPYNAME, "txtfile",
+			CURLFORM_FILE, fu_conf.txt, CURLFORM_END);
+	if (resForm) {
+		fprintf(stderr, "Error(%d): fail in formadd txtfile.\n", resForm);
 		ret= -resForm;
 		goto fail;
 	}
